@@ -6,66 +6,36 @@ repositories{
     google()
 }
 ext.supportLibVersion = '26.+'
+ext.kotlinVersion = '1.2.21'
+ext.okioVersion = '1.11.0'
+ext.androidSupportLibraryVersion = '27.0.2'
+ext.timberVersion = '4.5.1'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation(name:'email', ext:'aar')
     implementation "com.android.support:appcompat-v7:${supportLibVersion}"
-    implementation "com.android.support:design:${supportLibVersion}"
-    compile 'com.android.support:multidex:1.0.2'
-    implementation 'com.alibaba:fastjson:1.2.17'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
-    compile(name: 'imsdk', ext: 'aar')
-    implementation 'com.google.android:flexbox:1.0.0'
-    //信鸽3.2.6 版本
-  //完整的信鸽依赖四个都必须有，如果发生依赖冲突请根据对应的依赖版本号选择高版本的依赖。（使用jcenter自动接入请确认libs中没有信鸽的相关jar包）
-  implementation "com.google.guava:guava:23.0-android"
-  //信鸽jar
-  compile 'com.tencent.xinge:xinge:3.2.6-release'
-  //jg包
-  compile'com.tencent.jg:jg:1.1'
-  //wup包
-  compile 'com.tencent.wup:wup:1.0.0.E-release'
-  //mid包
-  compile 'com.tencent.mid:mid:4.0.6-release'
-/* 小米3.2.6-release版
- * 注意：若小米通道使用此版本,则信鸽sdk版本也需要同时使用v3.2.6-release
- */
-  compile 'com.tencent.xinge:mipush:3.2.6-release'
-    /* 华为 3.2.7-release版
- * 注意：若华为通道使用此版本,则信鸽sdk版本也需要同时使用v3.2.7-Release
- */
-compile 'com.tencent.xinge:xghw:3.2.6-release'
+    //----------aar包中依赖
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}"
+    implementation "com.squareup.okio:okio:${okioVersion}"
+    implementation 'commons-io:commons-io:2.4'
+    implementation "com.android.support:support-v4:${androidSupportLibraryVersion}"
+    implementation 'org.jsoup:jsoup:1.11.2'
+    implementation 'de.cketti.library.changelog:ckchangelog:1.2.1'
+    implementation 'com.github.bumptech.glide:glide:3.6.1'
+    implementation 'com.splitwise:tokenautocomplete:2.0.7'
+    implementation 'de.cketti.safecontentresolver:safe-content-resolver-v14:0.9.0'
+    implementation 'com.github.amlcurran.showcaseview:library:5.4.1'
+    implementation 'com.squareup.moshi:moshi:1.2.0'
+    implementation "com.jakewharton.timber:timber:${timberVersion}"
+    implementation 'net.jcip:jcip-annotations:1.0'
+    implementation 'org.apache.james:apache-mime4j-core:0.8.1'
+    //kmail-library
+    implementation 'org.apache.james:apache-mime4j-core:0.8.1'
+    implementation 'org.apache.james:apache-mime4j-dom:0.8.1'
+    implementation 'commons-io:commons-io:2.4'
+    implementation 'com.jcraft:jzlib:1.0.7'
+    implementation 'com.beetstra.jutf7:jutf7:1.0.0'
 
-/* 华为 3.2.8-Release
- * 注意：若华为通道使用此版本,则信鸽sdk版本也需要同时使用v4.0.5
- */
-    //compile 'com.tencent.xinge:xghw:3.2.8-Release'
-}
-
-//ext.postBuildExtras会在最后执行，覆盖Android模块的gradle配置
-ext.postBuildExtras = {
-  android {
-    packagingOptions {
-      exclude 'META-INF/NOTICE'
-      exclude 'META-INF/LICENSE'
-      //报这个错误时，More than one file was found with OS independent path 'okhttp3/internal/publicsuffix/publicsuffixes.gz'
-      //加一下配置
-      exclude 'okhttp3/internal/publicsuffix/publicsuffixes.gz'
-    }
-    defaultConfig {
-      multiDexEnabled true
-      manifestPlaceholders = [
-                XG_ACCESS_ID:"2100326881",
-                XG_ACCESS_KEY:"A136JKC9C3DA",
-                PACKAGE_NAME:"cn.com.sc.mobile.affairs",
-                HW_APPID: "100627911"
-      ]
-      ndk{
-        abiFilters "armeabi"
-      }
-    }
-    compileOptions {
-      sourceCompatibility JavaVersion.VERSION_1_8
-      targetCompatibility JavaVersion.VERSION_1_8
-    }
-  }
 }
