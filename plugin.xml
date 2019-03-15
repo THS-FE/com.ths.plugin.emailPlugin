@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.ths.plugin.emailPlugin" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<!--clobbers ： 非常重要。前端工程师在使用的时候通过这个 clobbers 去调用www/ThsElinkPlugin.js的公开方法
+feature 标签定义了 （服务名）name
+param name=”ios-package” value=”xxx” 定义iOS平台下的底层实现类名为 ： xxx
+param name=”android-package” value=”com.ths.plugin.emailPlugin.ThsEmailPlugin” 定义Android平台下的底层实现的 包名.类 ： com.ths.plugin.emailPlugin.ThsEmailPlugin-->
+<name>ThsEmailPlugin</name>
+<js-module name="ThsEmailPlugin" src="www/ThsEmailPlugin.js"><clobbers target="cordova.plugins.ThsEmailPlugin" /></js-module>
+
+<platform name="android">
+   <config-file parent="/*" target="res/xml/config.xml">
+        <feature name="ThsEmailPlugin"><param name="android-package" value="com.ths.plugin.emailPlugin.ThsEmailPlugin" /></feature>
+   </config-file>
+   <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+   <source-file src="src/android/ThsEmailPlugin.java" target-dir="src/com/ths/plugin/emailPlugin" />
+   <source-file src="src/android/email.aar" target-dir="libs" />
+   <framework src="src/android/email.gradle" custom="true" type="gradleReference" /> 
+</platform>
+</plugin>
