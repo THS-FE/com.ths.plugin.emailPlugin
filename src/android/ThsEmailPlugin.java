@@ -1,11 +1,15 @@
 package com.ths.plugin.emailPlugin;
+import android.content.ComponentName;
 import android.content.Intent;
 import com.fsck.k9.activity.Accounts;
+import com.fsck.k9.activity.MessageCompose;
 import com.fsck.k9.activity.setup.ThsAccountSetup;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import cn.com.sc.mobile.affairs.MainActivity;
 
 /**
  * 邮箱插件
@@ -20,6 +24,9 @@ public class ThsEmailPlugin extends CordovaPlugin {
             String relName = args.getString(2);
             String ip = args.getString(3);
             this.startEmail(username,pwd,relName,ip,callbackContext);
+        }else if(action.equals("sendEmail")){//发送邮件
+            String email = args.getString(0);
+            this.sendEmail(email);
         }
         return false;
     }
@@ -38,6 +45,20 @@ public class ThsEmailPlugin extends CordovaPlugin {
                         intent.putExtra(ThsAccountSetup.IP,ip);//邮箱服务地址
         cordova.getActivity().startActivity(intent);
         callbackContext.success("success");
+    }
+
+    /**
+     * 发送邮件
+     * @param email 邮箱地址
+     */
+    private void sendEmail(String email){
+        String substring = email;
+        if ("".equals(substring))
+            return;
+        Intent intent = new Intent(cordova.getActivity(),MessageCompose.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("email", substring);
+        cordova.getActivity().startActivity(intent);
     }
 
 }
